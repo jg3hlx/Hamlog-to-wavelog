@@ -1,0 +1,46 @@
+; --- Wavelog用ADIFデータ出力の定義ファイル ---
+;                        2025.09.12 by JG3HLX
+; 出力制限のため、一度に30000件以上の出力ができません。
+; レコード番号で分割して出力してください。
+;-------------------------------------------------
+#Adif=="C:\Hamlog\wavelog\logadi-!nW.adi"    ; 出力先
+; ログに日本語が含まれている場合、出力されたファイルの
+; 文字コードを"UTF-8"に変更してください。
+;-----------------------------------------------------
+; QSLの管理　
+; ? Qsl2　Qsl1 Qsl3  "設定内容"　で 
+; QSLの発行
+? Qsl2 "*"
+#Mov $$A="Y"    ; 紙 送信済 QSL_SENT
+; #Mov $$C="Y"    ; eQSL 送信済にする場合 EQSL_QSL_SENT
+; #Mov $$E="Y"    ; LoTw 送信済にする場合 EQSL_QSL_SEND
+
+; QSLの受領
+? Rcv
+#Mov $$B="Y"    ; 受領済 QSL_RCVD
+; #Mov $$D="Y"    ; eQSL 送信済にする場合 EQSL_QSL_SEND
+
+; QSLの発行
+? Qsl2 "E"
+#Mov $$D="Y"    ; eQSL 送信済 QSL_SEND
+? Qsl2 "L"
+#Mov $$D="Y"    ; LoTw 送信済 QSL_SEND
+? Qsl2 "H"
+#Mov $$D="Y"    ; hQSL 送信済 QSL_SEND
+? Qsl2 "*"
+#Mov $$D="Y"    ; 紙 送信済 QSL_SEND
+;
+;#Jst2Utc   ; JSTはUTCに変換する
+
+; ITUゾーン設定
+#Mov $$H="45"    ; 日本
+? DXST           ；日本以外
+#Mov $$H=""
+
+;-----------------------------------------------------
+; 出力
+#Print 0,0,"<CALL:!Af>!cp<QSO_DATE:!Af>!DY!DM!DD<TIME_ON:!Af>!TH!TM00<FREQ:!Af>!F7<BAND:!Af>!Bt<MODE:!Af>!MD<RST_SENT:!Af>!HR"
+#Print 0,0,"<RST_RCVD:!Af>!MR<QSL_SENT:!Af>!$$A<QSL_RCVD:!Af>!$$B<EQSL_QSL_SENT:!Af>!$$C<EQSL_QSL_RCVD:!Af>!$$D"
+#Print 0,0,"<CNTY:!Af>!JC<GRIDSQUARE:!Af>!GL<ITUZ:!Af>!$$H<NAME:!Af>!NA<QTH:!Af>!QT"
+;-----------------------------------------------------------
+#Print 0,0,"<EOR>"
