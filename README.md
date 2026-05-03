@@ -1,4 +1,4 @@
-　Turbo HAMLOGのQSLカード印刷機能を使いwavelog(https://github.com/wavelog/wavelog に取り込む為ためのファイルを作成します。
+　Turbo HAMLOGのQSLカード印刷機能を使いwavelog https://github.com/wavelog/wavelog に取り込む為ためのファイルを作成します。
 
 使用上の注意点
 
